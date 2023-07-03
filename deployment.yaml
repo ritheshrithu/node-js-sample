@@ -20,6 +20,8 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
+      imagePullSecrets:
+      - name: ocir-creds
 ---
 apiVersion: v1
 kind: Service 
@@ -35,3 +37,22 @@ spec:
     - protocol: TCP
       port: 8080
       targetPort: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: node-from-jenkins-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /node-nginx
+        pathType: Prefix
+        backend:
+          service:
+            name: node-from-jenkins
+            port:
+              number: 80
