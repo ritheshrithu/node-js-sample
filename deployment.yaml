@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-from-jenkins
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: node-from-jenkins
+  template:
+    metadata:
+      name: node-from-jenkins
+      labels:
+        app: node-from-jenkins
+    spec:
+      containers:
+      - name: node-from-jenkins
+        image: sjc.ocir.io/orasenatdpltintegration03/node-js-demo:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service 
+metadata:
+  name: node-from-jenkins
+  labels:
+    app: node-from-jenkins
+spec:
+  selector:
+    app: node-from-jenkins
+  type: ClusterIP
+  ports:
+    port: 8080
+    targetPort: 8080
