@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: node-from-jenkins
-        image: sjc.ocir.io/orasenatdpltintegration03/node-js-demo:latest
+        image: sjc.ocir.io/orasenatdpltintegration03/devops-demo/node-js-demo:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -55,4 +55,4 @@ spec:
           service:
             name: node-from-jenkins
             port:
-              number: 80
+              number: 8080
